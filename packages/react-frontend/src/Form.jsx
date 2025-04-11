@@ -38,6 +38,6 @@ function Form(props){
           />
           <input type="button" value="Submit" onClick={submitForm} />
         </form>
-    )
+    );
 }
 export default Form;
