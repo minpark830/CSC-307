@@ -1,1 +1,1 @@
-CSC 307 IE1: My First React App Assignment
+CSC 307 IE2: My First REST API Assignment
