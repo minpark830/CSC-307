@@ -34,17 +34,20 @@ const users = {
     ]
 };
 
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+const findUserById = (id) =>
+    users["users_list"].find((user) => user["id"] === id);
 
 const findUserByName = (name) => {
     return users["users_list"].filter(
       (user) => user["name"] === name
     );
 };
+
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
   
 app.get("/users", (req, res) => {
     const name = req.query.name;
@@ -56,9 +59,6 @@ app.get("/users", (req, res) => {
       res.send(users);
     }
 });
-
-const findUserById = (id) =>
-    users["users_list"].find((user) => user["id"] === id);
 
 app.get("/users/:id", (req, res) => {
     const id = req.params["id"]; //or req.params.id
