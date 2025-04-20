@@ -73,6 +73,20 @@ const deleteUserById = (id) => {
     return false;
 };
 
+const generateUniqueId = () => {
+    let newId;
+    let idExist = true;
+    let maxIdNumber = 1000000;
+
+    while(idExist){
+      newId = Math.floor(Math.random() * maxIdNumber).toString();
+
+      idExist = users["users_list"].some(user => user.id === newId);
+    }
+
+    return newId;
+};
+
 app.use(cors());
 app.use(express.json());
 
@@ -113,7 +127,10 @@ app.get("/users/:id", (req, res) => {
 });
 
 app.post("/users", (req, res) => {
-    const userToAdd = req.body;
+    const userToAdd = {
+      id: generateUniqueId(),
+      ...req.body       
+    };
     const success = addUser(userToAdd);
     if(!success) res.status(400).send("Missing required fields: name and job must not be empty.");
     
@@ -124,7 +141,7 @@ app.delete("/users/:id", (req, res) => {
     const id = req.params["id"]; //or req.params.id
     let result = deleteUserById(id);
     if (result){
-        res.send();
+        res.status(204).send();
     } else {
         res.status(404).send("Resource not found.");
     }
