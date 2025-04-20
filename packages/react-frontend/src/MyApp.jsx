@@ -14,10 +14,6 @@ function MyApp() {
         setCharacters(updated);
     }
 
-    function updateList(person) {
-        setCharacters([...characters, person]);
-    }
-
     function fetchUsers() {
         const promise = fetch("http://localhost:8000/users");
         return promise;
@@ -37,10 +33,14 @@ function MyApp() {
     
     function updateList(person) {
         postUser(person)
-          .then(() => setCharacters([...characters, person]))
-          .catch((error) => {
-            console.log(error);
-          });
+            .then((res) => {
+                if(res.status === 201) return res.json();
+                else throw new Error("Missing required fields: name and job must not be empty.");
+                })
+            .then((data) => setCharacters([...characters, data]))
+            .catch((error) => {
+                console.log(error.message);
+            });
     }
 
     useEffect(() => {

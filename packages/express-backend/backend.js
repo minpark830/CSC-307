@@ -58,8 +58,10 @@ const findUserByNameAndJob = (name, job) => {
 
 
 const addUser = (user) => {
+    if(!user.name || !user.job || user.name.trim() === "" || user.job.trim() === "") return false;
+      
     users["users_list"].push(user);
-    return user;
+    return true;
 };
 
 const deleteUserById = (id) => {
@@ -112,9 +114,10 @@ app.get("/users/:id", (req, res) => {
 
 app.post("/users", (req, res) => {
     const userToAdd = req.body;
-    addUser(userToAdd);
-    console.log(userToAdd);
-    res.send();
+    const success = addUser(userToAdd);
+    if(!success) res.status(400).send("Missing required fields: name and job must not be empty.");
+    
+    res.status(201).send(userToAdd);
 });
 
 app.delete("/users/:id", (req, res) => {
