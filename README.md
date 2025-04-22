@@ -1,1 +1,1 @@
-CSC 307 IE2: My First REST API Assignment
+CSC 307 IE3: Linking Frontend to Backend Assignment
