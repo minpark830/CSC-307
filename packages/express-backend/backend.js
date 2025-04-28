@@ -67,10 +67,7 @@ app.get("/users/:id", (req, res) => {
 });
 
 app.post("/users", (req, res) => {
-    const userToAdd = {
-      id: generateUniqueId(),
-      ...req.body       
-    };
+    const userToAdd = req.body;       
 
     userService.addUser(userToAdd)
     .then((result) => {
