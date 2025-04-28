@@ -8,7 +8,7 @@ function MyApp() {
     const [characters, setCharacters] = useState([]);
 
     function removeOneCharacter(index) {
-        fetch(`http://localhost:8000/users/${characters[index].id}`, {
+        fetch(`http://localhost:8000/users/${characters[index]._id}`, {
             method: "DELETE"
         }).then((res) => {
             if(res.status === 204){
@@ -55,7 +55,7 @@ function MyApp() {
     useEffect(() => {
         fetchUsers()
           .then((res) => res.json())
-          .then((json) => setCharacters(json["users_list"]))
+          .then((json) => setCharacters(json))
           .catch((error) => {
             console.log(error);
           });
